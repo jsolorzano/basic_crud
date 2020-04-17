@@ -11,3 +11,20 @@
 	<input type="submit" value="Enviar">
 
 </form>
+
+<?php
+
+$send = new MvcController();
+$send->registroUsuarioController();
+
+if(isset($_GET['action'])){
+	
+	if($_GET['action'] == "ok"){
+	
+		echo "Registro exitoso";
+	
+	}
+	
+}
+
+?>
