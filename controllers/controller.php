@@ -31,7 +31,30 @@ class MvcController{
 		include $respuesta;
 
 	}
-
+	
+	#REGISTRO DE USUARIOS
+	#-------------------------------------
+	public function registroUsuarioController(){
+		
+		if(isset($_POST['usuario'])){
+		
+			$datosController = array(
+				'user' => $_POST['usuario'],
+				'password' => $_POST['password'],
+				'email' => $_POST['email'],
+				'd_create' => date("Y-m-d H:i:s")
+			);
+			
+			$respuesta = Datos::registroUsuarioModel($datosController, 'users');
+			
+			if($respuesta == "success"){
+				
+				header("location:index.php?action=ok");
+				
+			}
+		}
+		
+	}
 }
 
 ?>
