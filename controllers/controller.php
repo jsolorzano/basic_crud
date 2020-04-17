@@ -16,15 +16,14 @@ class MvcController{
 
 	public function enlacesPaginasController(){
 
-		if(isset( $_GET['action'])){
+		if(isset($_GET['action'])){
 			
 			$enlaces = $_GET['action'];
 		
-		}
-
-		else{
-
-			$enlaces = "index";
+		}else{
+			
+			$enlaces = "registro";
+			
 		}
 
 		$respuesta = Paginas::enlacesPaginasModel($enlaces);
