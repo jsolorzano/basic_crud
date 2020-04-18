@@ -1,32 +1,44 @@
+<?php
+
+session_start();
+
+// Validamos si se ha iniciado sesión para poder ingresar en esta página				
+if(!$_SESSION['validar']){
+
+	header("location:index.php?action=ingresar");
+	
+	exit();
+
+}
+
+?>
+
 <h1>USUARIOS</h1>
 
-	<table border="1">
+<table border="1">
+	
+	<thead>
 		
-		<thead>
-			
-			<tr>
-				<th>Usuario</th>
-				<th>Contraseña</th>
-				<th>Email</th>
-				<th></th>
-				<th></th>
+		<tr>
+			<th>Usuario</th>
+			<th>Contraseña</th>
+			<th>Email</th>
+			<th></th>
+			<th></th>
 
-			</tr>
+		</tr>
 
-		</thead>
+	</thead>
 
-		<tbody>
-			
-			<tr>
-				<td>juan</td>
-				<td>1234</td>
-				<td>juan@hotmail.com</td>
-				<td><button>Editar</button></td>
-				<td><button>Borrar</button></td>
-			</tr>
+	<tbody>
+		
+	<?php
 
-		</tbody>
+	$usuarios = new MvcController();
+	$usuarios->listaUsuariosController();
 
+	?>
 
-
-	</table>
+	</tbody>
+	
+</table>
