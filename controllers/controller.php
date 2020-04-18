@@ -70,6 +70,11 @@ class MvcController{
 			$respuesta = Datos::ingresoUsuarioModel($datosController, 'users');
 			
 			if($respuesta['user'] == $_POST['usuarioIngreso'] && $respuesta['password'] == $_POST['passwordIngreso']){
+				
+				// Iniciamos sesión y creamos una varible de sesión
+				session_start();
+				
+				$_SESSION['validar'] = true;
 			
 				header("location:index.php?action=usuarios");
 			
@@ -79,11 +84,26 @@ class MvcController{
 			
 			}
 			
-			//~ if($respuesta == "success"){
-				
-				//~ header("location:index.php?action=ok");
-				
-			//~ }
+		}
+		
+	}
+	
+	#LISTA DE USUARIOS
+	#-------------------------------------
+	public function listaUsuariosController(){
+		
+		$respuesta = Datos::listaUsuariosModel('users');
+		
+		foreach($respuesta as $respuesta){
+		
+			echo '<tr>
+					<td>'.$respuesta['user'].'</td>
+					<td>'.$respuesta['password'].'</td>
+					<td>'.$respuesta['email'].'</td>
+					<td><button>Editar</button></td>
+					<td><button>Borrar</button></td>
+				</tr>';
+
 		}
 		
 	}
