@@ -135,6 +135,35 @@ class Datos extends Conexion{
 		$stmt->close();  // Cerrar conexión
 
 	}
+	
+	#BORRAR USUARIO
+	#-----------------------------------------------------------------------------
+	public function borrarUsuarioModel($datosModel, $tabla){
+		
+		#Para insertar los datos usamos los métodos propios de PDO
+		#Estos métodos ya se encargan de realizar la limpieza de los datos
+		#prepare(): prepara la consulta sql incluyéndole varios marcadores de parámetro
+		#Los marcadores de parámetro se pueden indicar mediante nombre (:name) o mediante signo de interrogación (?)
+		#bindParam(): vincula las variables de php a los distintos marcadores de parámetro
+		#execute(): ejecuta la consulta y retorna un booleano (true o false)
+		
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id=:id");
+		
+		$stmt->bindParam(":id", $datosModel, PDO::PARAM_INT);
+		
+		if($stmt->execute()){
+			
+			return "success";
+			
+		}else{
+		
+			return "error";
+		
+		}
+		
+		$stmt->close();  // Cerrar conexión
+
+	}
 
 }
 
