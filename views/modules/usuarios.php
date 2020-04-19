@@ -36,6 +36,7 @@ if(!$_SESSION['validar']){
 
 	$usuarios = new MvcController();
 	$usuarios->listaUsuariosController();
+	$usuarios->borrarUsuarioController();
 
 	?>
 

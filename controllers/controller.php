@@ -101,7 +101,7 @@ class MvcController{
 					<td>'.$respuesta['password'].'</td>
 					<td>'.$respuesta['email'].'</td>
 					<td><a href="index.php?action=editar&id='.$respuesta['id'].'"><button>Editar</button></a></td>
-					<td><button>Borrar</button></td>
+					<td><a href="index.php?action=usuarios&idBorrar='.$respuesta['id'].'"><button>Borrar</button></a></td>
 				</tr>';
 
 		}
@@ -148,6 +148,27 @@ class MvcController{
 				header("location:index.php?action=edit_ok&id=".$_POST['id']);
 				
 			}
+		}
+		
+	}
+	
+	
+	#BORRAR USUARIO
+	#-------------------------------------
+	public function borrarUsuarioController(){
+		
+		if(isset($_GET['idBorrar'])){
+		
+			$datosController = $_GET['idBorrar'];
+			
+			$respuesta = Datos::borrarUsuarioModel($datosController, 'users');
+			
+			if($respuesta == "success"){
+				
+				header("location:index.php?action=usuarios");
+				
+			}
+
 		}
 		
 	}
