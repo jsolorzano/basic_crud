@@ -15,6 +15,10 @@ class Paginas{
 		
 			$module = "views/modules/registro.php";
 		
+		}else if($enlaces == "edit_ok"){
+		
+			$module = "views/modules/editar.php";
+		
 		}else if($enlaces == "fallo"){
 		
 			$module = "views/modules/ingresar.php";

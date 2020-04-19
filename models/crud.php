@@ -32,7 +32,7 @@ class Datos extends Conexion{
 		
 		}
 		
-		$tmt->close();  // Cerrar conexión
+		$stmt->close();  // Cerrar conexión
 
 	}
 	
@@ -56,7 +56,7 @@ class Datos extends Conexion{
 		
 		return $stmt->fetch();
 		
-		$tmt->close();  // Cerrar conexión
+		$stmt->close();  // Cerrar conexión
 
 	}
 	
@@ -76,7 +76,63 @@ class Datos extends Conexion{
 		
 		return $stmt->fetchAll();
 		
-		$tmt->close();  // Cerrar conexión
+		$stmt->close();  // Cerrar conexión
+
+	}
+	
+	#BUSCAR USUARIO
+	#-----------------------------------------------------------------------------
+	public function buscarUsuarioModel($datosModel, $tabla){
+		
+		#Para insertar los datos usamos los métodos propios de PDO
+		#Estos métodos ya se encargan de realizar la limpieza de los datos
+		#prepare(): prepara la consulta sql incluyéndole varios marcadores de parámetro
+		#Los marcadores de parámetro se pueden indicar mediante nombre (:name) o mediante signo de interrogación (?)
+		#bindParam(): vincula las variables de php a los distintos marcadores de parámetro
+		#execute(): ejecuta la consulta y retorna un booleano (true o false)
+		#fetch(): obtiene el registro resultante de la consulta
+		
+		$stmt = Conexion::conectar()->prepare("SELECT id, user, password, email, d_create, d_update FROM $tabla WHERE id = :id");
+		
+		$stmt->bindParam(":id", $datosModel, PDO::PARAM_INT);
+		
+		$stmt->execute();
+		
+		return $stmt->fetch();
+		
+		$stmt->close();  // Cerrar conexión
+
+	}
+	
+	#EDICIÓN DE USUARIOS
+	#-----------------------------------------------------------------------------
+	public function editarUsuarioModel($datosModel, $tabla){
+		
+		#Para insertar los datos usamos los métodos propios de PDO
+		#Estos métodos ya se encargan de realizar la limpieza de los datos
+		#prepare(): prepara la consulta sql incluyéndole varios marcadores de parámetro
+		#Los marcadores de parámetro se pueden indicar mediante nombre (:name) o mediante signo de interrogación (?)
+		#bindParam(): vincula las variables de php a los distintos marcadores de parámetro
+		#execute(): ejecuta la consulta y retorna un booleano (true o false)
+		
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET user=:user, password=:password, email=:email WHERE id=:id");
+		
+		$stmt->bindParam(":user", $datosModel['user'], PDO::PARAM_STR);
+		$stmt->bindParam(":password", $datosModel['password'], PDO::PARAM_STR);
+		$stmt->bindParam(":email", $datosModel['email'], PDO::PARAM_STR);
+		$stmt->bindParam(":id", $datosModel['id'], PDO::PARAM_INT);
+		
+		if($stmt->execute()){
+			
+			return "success";
+			
+		}else{
+		
+			return "error";
+		
+		}
+		
+		$stmt->close();  // Cerrar conexión
 
 	}
 
