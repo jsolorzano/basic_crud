@@ -1,13 +1,45 @@
+<?php
+
+session_start();
+
+// Validamos si se ha iniciado sesión para poder ingresar en esta página				
+if(!$_SESSION['validar']){
+
+	header("location:index.php?action=ingresar");
+	
+	exit();
+
+}
+
+?>
 <h1>EDITAR USUARIO</h1>
 
-<form method="post" action="">
+<form method="post">
 	
-	<input type="text" placeholder="Usuario" name="usuario" required>
+	<?php
 
-	<input type="password" placeholder="Contraseña" name="password" required>
+	$buscarUsuario = new MvcController();
+	$buscarUsuario->buscarUsuarioController();
 
-	<input type="email" placeholder="Email" name="email" required>
-
-	<input type="submit" value="Enviar">
+	?>
 
 </form>
+
+<?php
+
+$edicion = new MvcController();
+$edicion->editarUsuarioController();
+
+if(isset($_GET['action'])){
+	
+	if($_GET['action'] == "edit_ok"){
+	
+		echo "Edición exitosa";
+	
+	}
+	
+}
+
+?>
+
+
