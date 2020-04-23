@@ -6,7 +6,7 @@
 	<input type="text" placeholder="Mínimo 6 caracteres" maxlength="6" name="usuarioRegistro" id="usuarioRegistro" required>
 
 	<label for="passwordRegistro">Contraseña</label>
-	<input type="password" placeholder="Mínimo 6 caracteres, incluir " name="passwordRegistro" id="passwordRegistro" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
+	<input type="password" placeholder="Mínimo 6 caracteres, incluir número(s) y una mayúscula" name="passwordRegistro" id="passwordRegistro" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
 
 	<label for="emailRegistro">E-mail</label>
 	<input type="email" placeholder="Escriba su correo electrónico" name="emailRegistro" id="emailRegistro" required>
