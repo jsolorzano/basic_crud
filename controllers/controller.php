@@ -116,12 +116,15 @@ class MvcController{
 		
 		$respuesta = Datos::buscarUsuarioModel($user_id, 'users');
 		
-		echo '<input type="text" value="'.$respuesta['user'].'" name="usuarioEditar" required>
-
-			<input type="text" value="'.$respuesta['password'].'" name="passwordEditar" required>
-
-			<input type="email" value="'.$respuesta['email'].'" name="emailEditar" required>
-
+		echo '<label for="usuarioEditar">Usuario</label>
+			<input type="text" placeholder="Mínimo 6 caracteres" maxlength="6" value="'.$respuesta['user'].'" name="usuarioEditar" id="usuarioEditar" required>
+			
+			<label for="passwordEditar">Contraseña</label>
+			<input type="text" placeholder="Mínimo 6 caracteres, incluir número(s) y una mayúscula" value="'.$respuesta['password'].'" name="passwordEditar" id="passwordEditar" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
+			
+			<label for="emailEditar">E-mail</label>
+			<input type="email" placeholder="Escriba su correo electrónico" value="'.$respuesta['email'].'" name="emailEditar" id="emailEditar" required>
+			
 			<input type="hidden" name="id" value="'.$respuesta['id'].'">
 
 			<input type="submit" value="Actualizar">';
