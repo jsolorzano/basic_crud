@@ -37,19 +37,28 @@ class MvcController{
 	public function registroUsuarioController(){
 		
 		if(isset($_POST['usuarioRegistro'])){
+			
+			#preg_match(): realiza una comparación con una expresión regular
+			
+			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST['usuarioRegistro']) && 
+			   preg_match('/^[a-zA-Z0-9]*$/', $_POST['passwordRegistro']) &&
+			   preg_match('/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/', $_POST['emailRegistro'])
+			){
 		
-			$datosController = array(
-				'user' => $_POST['usuarioRegistro'],
-				'password' => $_POST['passwordRegistro'],
-				'email' => $_POST['emailRegistro'],
-				'd_create' => date("Y-m-d H:i:s")
-			);
-			
-			$respuesta = Datos::registroUsuarioModel($datosController, 'users');
-			
-			if($respuesta == "success"){
+				$datosController = array(
+					'user' => $_POST['usuarioRegistro'],
+					'password' => $_POST['passwordRegistro'],
+					'email' => $_POST['emailRegistro'],
+					'd_create' => date("Y-m-d H:i:s")
+				);
 				
-				header("location:index.php?action=ok");
+				$respuesta = Datos::registroUsuarioModel($datosController, 'users');
+				
+				if($respuesta == "success"){
+					
+					header("location:index.php?action=ok");
+					
+				}
 				
 			}
 		}
@@ -61,27 +70,35 @@ class MvcController{
 	public function ingresoUsuarioController(){
 		
 		if(isset($_POST['usuarioIngreso'])){
+			
+			#preg_match(): realiza una comparación con una expresión regular
+			
+			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST['usuarioIngreso']) && 
+			   preg_match('/^[a-zA-Z0-9]*$/', $_POST['passwordIngreso']))
+			){
 		
-			$datosController = array(
-				'user' => $_POST['usuarioIngreso'],
-				'password' => $_POST['passwordIngreso']
-			);
-			
-			$respuesta = Datos::ingresoUsuarioModel($datosController, 'users');
-			
-			if($respuesta['user'] == $_POST['usuarioIngreso'] && $respuesta['password'] == $_POST['passwordIngreso']){
+				$datosController = array(
+					'user' => $_POST['usuarioIngreso'],
+					'password' => $_POST['passwordIngreso']
+				);
 				
-				// Iniciamos sesión y creamos una varible de sesión
-				session_start();
+				$respuesta = Datos::ingresoUsuarioModel($datosController, 'users');
 				
-				$_SESSION['validar'] = true;
-			
-				header("location:index.php?action=usuarios");
-			
-			}else{
-			
-				header("location:index.php?action=fallo");
-			
+				if($respuesta['user'] == $_POST['usuarioIngreso'] && $respuesta['password'] == $_POST['passwordIngreso']){
+					
+					// Iniciamos sesión y creamos una varible de sesión
+					session_start();
+					
+					$_SESSION['validar'] = true;
+				
+					header("location:index.php?action=usuarios");
+				
+				}else{
+				
+					header("location:index.php?action=fallo");
+				
+				}
+				
 			}
 			
 		}
@@ -136,19 +153,28 @@ class MvcController{
 	public function editarUsuarioController(){
 		
 		if(isset($_POST['usuarioEditar'])){
+			
+			#preg_match(): realiza una comparación con una expresión regular
+			
+			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST['usuarioEditar']) && 
+			   preg_match('/^[a-zA-Z0-9]*$/', $_POST['passwordEditar']) &&
+			   preg_match('/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/', $_POST['emailEditar'])
+			){
 		
-			$datosController = array(
-				'id' => $_POST['id'],
-				'user' => $_POST['usuarioEditar'],
-				'password' => $_POST['passwordEditar'],
-				'email' => $_POST['emailEditar']
-			);
-			
-			$respuesta = Datos::editarUsuarioModel($datosController, 'users');
-			
-			if($respuesta == "success"){
+				$datosController = array(
+					'id' => $_POST['id'],
+					'user' => $_POST['usuarioEditar'],
+					'password' => $_POST['passwordEditar'],
+					'email' => $_POST['emailEditar']
+				);
 				
-				header("location:index.php?action=edit_ok&id=".$_POST['id']);
+				$respuesta = Datos::editarUsuarioModel($datosController, 'users');
+				
+				if($respuesta == "success"){
+					
+					header("location:index.php?action=edit_ok&id=".$_POST['id']);
+					
+				}
 				
 			}
 		}
