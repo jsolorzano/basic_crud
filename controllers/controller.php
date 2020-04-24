@@ -42,12 +42,18 @@ class MvcController{
 			
 			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST['usuarioRegistro']) && 
 			   preg_match('/^[a-zA-Z0-9]*$/', $_POST['passwordRegistro']) &&
-			   preg_match('/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/', $_POST['emailRegistro'])
-			){
-		
+			   preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST['emailRegistro']))
+			{
+			
+				#crypt(): devolverá el hash de un string utilizando el algoritmo
+				#estándar basado en DES de Unix o algoritmos alternativos que puedan
+				#estar disponibles en el sistema.
+				
+				$encriptar = crypt($_POST['passwordRegistro'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+				
 				$datosController = array(
 					'user' => $_POST['usuarioRegistro'],
-					'password' => $_POST['passwordRegistro'],
+					'password' => $encriptar,
 					'email' => $_POST['emailRegistro'],
 					'd_create' => date("Y-m-d H:i:s")
 				);
@@ -75,16 +81,18 @@ class MvcController{
 			
 			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST['usuarioIngreso']) && 
 			   preg_match('/^[a-zA-Z0-9]*$/', $_POST['passwordIngreso']))
-			){
+			{
+				
+				$encriptar = crypt($_POST['passwordIngreso'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 		
 				$datosController = array(
 					'user' => $_POST['usuarioIngreso'],
-					'password' => $_POST['passwordIngreso']
+					'password' => $encriptar
 				);
 				
 				$respuesta = Datos::ingresoUsuarioModel($datosController, 'users');
 				
-				if($respuesta['user'] == $_POST['usuarioIngreso'] && $respuesta['password'] == $_POST['passwordIngreso']){
+				if($respuesta['user'] == $_POST['usuarioIngreso'] && $respuesta['password'] == $encriptar){
 					
 					// Iniciamos sesión y creamos una varible de sesión
 					session_start();
@@ -158,13 +166,19 @@ class MvcController{
 			
 			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST['usuarioEditar']) && 
 			   preg_match('/^[a-zA-Z0-9]*$/', $_POST['passwordEditar']) &&
-			   preg_match('/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/', $_POST['emailEditar'])
-			){
+			   preg_match('/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/', $_POST['emailEditar']))
+			{
+				
+				#crypt(): devolverá el hash de un string utilizando el algoritmo
+				#estándar basado en DES de Unix o algoritmos alternativos que puedan
+				#estar disponibles en el sistema.
+				
+				$encriptar = crypt($_POST['passwordEditar'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 		
 				$datosController = array(
 					'id' => $_POST['id'],
 					'user' => $_POST['usuarioEditar'],
-					'password' => $_POST['passwordEditar'],
+					'password' => $encriptar,
 					'email' => $_POST['emailEditar']
 				);
 				
