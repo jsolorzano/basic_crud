@@ -92,19 +92,63 @@ class MvcController{
 				
 				$respuesta = Datos::ingresoUsuarioModel($datosController, 'users');
 				
-				if($respuesta['user'] == $_POST['usuarioIngreso'] && $respuesta['password'] == $encriptar){
-					
-					// Iniciamos sesión y creamos una varible de sesión
-					session_start();
-					
-					$_SESSION['validar'] = true;
+				$intentos = $respuesta['intentos'];
 				
-					header("location:index.php?action=usuarios");
+				$usuario = $_POST['usuarioIngreso'];
 				
+				$maximoIntentos = 3;
+				
+				if($intentos < $maximoIntentos){
+				
+					if($respuesta['user'] == $_POST['usuarioIngreso'] && $respuesta['password'] == $encriptar){
+						
+						// Iniciamos sesión y creamos una varible de sesión
+						session_start();
+						
+						// Reiniciamos el contador de intentos (al ingresar)
+						$intentos = 0;
+					
+						$datosController = array(
+							'usuarioActual' => $usuario,
+							'actualizarIntentos' => $intentos
+						);
+						
+						$respuestaActualizarIntentos = Datos::intentosUsuarioModel($datosController, "users");
+						
+						$_SESSION['validar'] = true;
+					
+						header("location:index.php?action=usuarios");
+					
+					}else{
+						
+						// Aumentamos el contador de intentos (al fallar)
+						$intentos++;
+						
+						$datosController = array(
+							'usuarioActual' => $usuario,
+							'actualizarIntentos' => $intentos
+						);
+						
+						$respuestaActualizarIntentos = Datos::intentosUsuarioModel($datosController, "users");
+					
+						header("location:index.php?action=fallo");
+					
+					}
+					
 				}else{
-				
-					header("location:index.php?action=fallo");
-				
+					
+					// Reiniciamos el contador de intentos (al fallar 3 veces)
+					$intentos = 0;
+					
+					$datosController = array(
+						'usuarioActual' => $usuario,
+						'actualizarIntentos' => $intentos
+					);
+					
+					$respuestaActualizarIntentos = Datos::intentosUsuarioModel($datosController, "users");
+					
+					header("location:index.php?action=fallo3intentos");
+					
 				}
 				
 			}
