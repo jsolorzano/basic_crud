@@ -48,7 +48,7 @@ class Datos extends Conexion{
 		#execute(): ejecuta la consulta y retorna un booleano (true o false)
 		#fetch(): obtiene el registro resultante de la consulta
 		
-		$stmt = Conexion::conectar()->prepare("SELECT id, user, password, email, d_create, d_update FROM $tabla WHERE user = :user");
+		$stmt = Conexion::conectar()->prepare("SELECT id, user, password, email, intentos, d_create, d_update FROM $tabla WHERE user = :user");
 		
 		$stmt->bindParam(":user", $datosModel['user'], PDO::PARAM_STR);
 		
@@ -58,6 +58,29 @@ class Datos extends Conexion{
 		
 		$stmt->close();  // Cerrar conexión
 
+	}
+	
+	#INTENTOS USUARIO
+	#-----------------------------------------------------------------------------
+	public function intentosUsuarioModel($datosModel, $tabla){
+		
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET intentos = :intentos WHERE user = :user");
+		
+		$stmt->bindParam(":user", $datosModel['usuarioActual'], PDO::PARAM_STR);
+		$stmt->bindParam(":intentos", $datosModel['actualizarIntentos'], PDO::PARAM_INT);
+		
+		if($stmt->execute()){
+			
+			return "success";
+			
+		}else{
+		
+			return "error";
+		
+		}
+		
+		$stmt->close();  // Cerrar conexión
+		
 	}
 	
 	#LISTA DE USUARIOS
