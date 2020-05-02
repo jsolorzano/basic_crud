@@ -5,7 +5,7 @@ session_start();
 // Validamos si se ha iniciado sesión para poder ingresar en esta página				
 if(!$_SESSION['validar']){
 
-	header("location:index.php?action=ingresar");
+	header("location:ingresar");
 	
 	exit();
 
