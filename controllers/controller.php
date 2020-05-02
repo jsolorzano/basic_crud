@@ -40,10 +40,11 @@ class MvcController{
 			
 			#preg_match(): realiza una comparación con una expresión regular
 			
-			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST['usuarioRegistro']) && 
-			   preg_match('/^[a-zA-Z0-9]*$/', $_POST['passwordRegistro']) &&
+			if(preg_match('/^[a-zA-Z0-9]+$/', $_POST['usuarioRegistro']) && 
+			   preg_match('/^[a-zA-Z0-9]+$/', $_POST['passwordRegistro']) &&
 			   preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST['emailRegistro']))
 			{
+				echo "Aquí";
 			
 				#crypt(): devolverá el hash de un string utilizando el algoritmo
 				#estándar basado en DES de Unix o algoritmos alternativos que puedan
@@ -62,7 +63,7 @@ class MvcController{
 				
 				if($respuesta == "success"){
 					
-					header("location:index.php?action=ok");
+					header("location:ok");
 					
 				}
 				
@@ -117,7 +118,7 @@ class MvcController{
 						
 						$_SESSION['validar'] = true;
 					
-						header("location:index.php?action=usuarios");
+						header("location:usuarios");
 					
 					}else{
 						
@@ -131,7 +132,7 @@ class MvcController{
 						
 						$respuestaActualizarIntentos = Datos::intentosUsuarioModel($datosController, "users");
 					
-						header("location:index.php?action=fallo");
+						header("location:fallo");
 					
 					}
 					
@@ -147,7 +148,7 @@ class MvcController{
 					
 					$respuestaActualizarIntentos = Datos::intentosUsuarioModel($datosController, "users");
 					
-					header("location:index.php?action=fallo3intentos");
+					header("location:fallo3intentos");
 					
 				}
 				
@@ -252,7 +253,7 @@ class MvcController{
 			
 			if($respuesta == "success"){
 				
-				header("location:index.php?action=usuarios");
+				header("location:usuarios");
 				
 			}
 
@@ -260,5 +261,3 @@ class MvcController{
 		
 	}
 }
-
-?>
