@@ -187,5 +187,53 @@ class Datos extends Conexion{
 		$stmt->close();  // Cerrar conexión
 
 	}
+	
+	#VALIDAR USUARIO
+	#-----------------------------------------------------------------------------
+	public function validarUsuarioModel($datosModel, $tabla){
+		
+		#Para insertar los datos usamos los métodos propios de PDO
+		#Estos métodos ya se encargan de realizar la limpieza de los datos
+		#prepare(): prepara la consulta sql incluyéndole varios marcadores de parámetro
+		#Los marcadores de parámetro se pueden indicar mediante nombre (:name) o mediante signo de interrogación (?)
+		#bindParam(): vincula las variables de php a los distintos marcadores de parámetro
+		#execute(): ejecuta la consulta y retorna un booleano (true o false)
+		#fetch(): obtiene el registro resultante de la consulta
+		
+		$stmt = Conexion::conectar()->prepare("SELECT user FROM $tabla WHERE user = :user");
+		
+		$stmt->bindParam(":user", $datosModel, PDO::PARAM_STR);
+		
+		$stmt->execute();
+		
+		return $stmt->fetch();
+		
+		$stmt->close();  // Cerrar conexión
+
+	}
+	
+	#VALIDAR EMAIL
+	#-----------------------------------------------------------------------------
+	public function validarEmailModel($datosModel, $tabla){
+		
+		#Para insertar los datos usamos los métodos propios de PDO
+		#Estos métodos ya se encargan de realizar la limpieza de los datos
+		#prepare(): prepara la consulta sql incluyéndole varios marcadores de parámetro
+		#Los marcadores de parámetro se pueden indicar mediante nombre (:name) o mediante signo de interrogación (?)
+		#bindParam(): vincula las variables de php a los distintos marcadores de parámetro
+		#execute(): ejecuta la consulta y retorna un booleano (true o false)
+		#fetch(): obtiene el registro resultante de la consulta
+		
+		$stmt = Conexion::conectar()->prepare("SELECT email FROM $tabla WHERE email = :email");
+		
+		$stmt->bindParam(":email", $datosModel, PDO::PARAM_STR);
+		
+		$stmt->execute();
+		
+		return $stmt->fetch();
+		
+		$stmt->close();  // Cerrar conexión
+
+	}
 
 }
