@@ -85,6 +85,8 @@
 			padding:10px;
 		}
 	</style>
+	
+	<script src="views/js/jquery-3.0.0.min.js"></script>
 
 </head>
 

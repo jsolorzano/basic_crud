@@ -260,4 +260,46 @@ class MvcController{
 		}
 		
 	}
+	
+	
+	#VALIDAR USUARIO
+	#-------------------------------------
+	public function validarUsuarioController($validarUsuario){
+		
+		$datosController = $validarUsuario;
+		
+		$respuesta = Datos::validarUsuarioModel($datosController, 'users');
+		
+		if(count($respuesta['user']) > 0){
+			
+			echo 0;
+			
+		}else{
+		
+			echo 1;
+		
+		}
+		
+	}
+	
+	
+	#VALIDAR EMAIL
+	#-------------------------------------
+	public function validarEmailController($validarEmail){
+		
+		$datosController = $validarEmail;
+		
+		$respuesta = Datos::validarEmailModel($datosController, 'users');
+		
+		if(count($respuesta['email']) > 0){
+			
+			echo 0;
+			
+		}else{
+		
+			echo 1;
+		
+		}
+		
+	}
 }

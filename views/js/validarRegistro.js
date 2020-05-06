@@ -1,3 +1,86 @@
+// Validar usuario existente con ajax
+
+var usuarioExistente = true;
+var emailExistente = true;
+
+$("#usuarioRegistro").change(function(){
+	
+	var usuario = $("#usuarioRegistro").val();
+	
+	var datos = new FormData();
+	datos.append("validarUsuario", usuario);
+	
+	$.ajax({
+		url:"views/modules/ajax.php",
+		method:"POST",
+		data:datos,
+		cache:false,
+		contentType:false,
+		processData:false,
+		success:function(respuesta){
+			
+			if(respuesta == 0){
+				
+				$("label[for='usuarioRegistro'] span").html('<p>Este usuario ya existe en la base de datos</p>');
+				
+				usuarioExistente = true;
+				
+			}else{
+			
+				$("label[for='usuarioRegistro'] span").html('');
+				
+				usuarioExistente = false;
+			
+			}
+			
+		}
+	});
+	
+});
+
+// Fin validar usuario existente con ajax
+
+
+// Validar email existente con ajax
+
+$("#emailRegistro").change(function(){
+	
+	var email = $("#emailRegistro").val();
+	
+	var datos = new FormData();
+	datos.append("validarEmail", email);
+	
+	$.ajax({
+		url:"views/modules/ajax.php",
+		method:"POST",
+		data:datos,
+		cache:false,
+		contentType:false,
+		processData:false,
+		success:function(respuesta){
+			
+			if(respuesta == 0){
+				
+				$("label[for='emailRegistro'] span").html('<p>Este email ya existe en la base de datos</p>');
+				
+				emailExistente = true;
+				
+			}else{
+			
+				$("label[for='emailRegistro'] span").html('');
+				
+				emailExistente = false;
+			
+			}
+			
+		}
+	});
+	
+});
+
+// Fin validar email existente con ajax
+
+
 // Validar registro
 
 function validarRegistro(){
@@ -26,6 +109,14 @@ function validarRegistro(){
 		if(!expresion.test(usuario)){
 			
 			document.querySelector("label[for='usuarioRegistro']").innerHTML += "<br><i style='color:red;'>No escriba caracteres especiales.</i>";
+			
+			return false;
+			
+		}
+		
+		if(usuarioExistente){
+			
+			document.querySelector("label[for='usuarioRegistro'] span").innerHTML = "<p>Este usuario ya existe en la base de datos</p>";
 			
 			return false;
 			
@@ -70,6 +161,14 @@ function validarRegistro(){
 		if(!expresion.test(email)){
 			
 			document.querySelector("label[for='emailRegistro']").innerHTML += "<br><i style='color:red;'>Escriba correctamente el Email.</i>";
+			
+			return false;
+			
+		}
+		
+		if(emailExistente){
+			
+			document.querySelector("label[for='emailRegistro'] span").innerHTML = "<p>Este email ya existe en la base de datos</p>";
 			
 			return false;
 			
